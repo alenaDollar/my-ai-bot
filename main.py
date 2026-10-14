@@ -4,29 +4,29 @@ import asyncio
 from aiogram import Bot, Dispatcher, types
 from aiogram.filters import Command
 from dotenv import load_dotenv
-from openai import OpenAI
+from groq import Groq
 
 load_dotenv()
 logging.basicConfig(level=logging.INFO)
 
 BOT_TOKEN = os.getenv("BOT_TOKEN")
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 
 bot = Bot(token=BOT_TOKEN)
 dp = Dispatcher()
-client = OpenAI(api_key=OPENAI_API_KEY)
+client = Groq(api_key=GROQ_API_KEY)
 
 SYSTEM_PROMPT = "Ты полезный и дружелюбный ассистент. Отвечай кратко и по делу."
 
 @dp.message(Command("start"))
 async def cmd_start(message: types.Message):
-    await message.answer(" Привет! 👋 Я твой ИИ-помощник. Задай мне любой вопрос — отвечу быстро и по делу.")
+    await message.answer("Привет! 👋 Я твой ИИ-помощник. Задай мне любой вопрос — отвечу быстро и по делу.")
 
 @dp.message()
 async def handle_message(message: types.Message):
     try:
         response = client.chat.completions.create(
-            model="gpt-3.5-turbo",
+            model="llama-3.3-70b-versatile",
             messages=[
                 {"role": "system", "content": SYSTEM_PROMPT},
                 {"role": "user", "content": message.text}
@@ -41,5 +41,5 @@ async def handle_message(message: types.Message):
 async def main():
     await dp.start_polling(bot)
 
-if __name__ == "__main__":
+if name == "__main__":
     asyncio.run(main())
