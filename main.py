@@ -20,7 +20,7 @@ SYSTEM_PROMPT = "Ты полезный и дружелюбный ассисте�
 
 @dp.message(Command("start"))
 async def cmd_start(message: types.Message):
-    await message.answer("Привет! Я ИИ-бот. Напиши мне любой вопрос, и я отвечу.")
+    await message.answer(" Привет! 👋 Я твой ИИ-помощник. Задай мне любой вопрос — отвечу быстро и по делу.")
 
 @dp.message()
 async def handle_message(message: types.Message):
